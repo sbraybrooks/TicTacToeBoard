@@ -79,17 +79,40 @@ TEST(TicTacToeBoardTest, placePiece)
 	EXPECT_TRUE(threeTb.placePiece(3,1) == X);
 	EXPECT_TRUE(threeTb.placePiece(3,1) == X);
 	EXPECT_TRUE(threeTb.placePiece(3,1) == X);
-	EXPECT_TRUE(threeTb.placePiece(1,3) == O);
+	EXPECT_TRUE(threeTb.placePiece(1,3) == O) << "trying to place an X on an O place should return O";
 	
 }
 
-TEST(TicTacToeBoardTest, verticalWin)
+TEST(TicTacToeBoardTest, diagonalWinX)
 {
 	TicTacToeBoard threeTb;
 	EXPECT_TRUE(threeTb.placePiece(1,1) == X);
 	EXPECT_TRUE(threeTb.placePiece(1,3) == O);
+	EXPECT_TRUE(threeTb.placePiece(2,2) == X);
+	EXPECT_TRUE(threeTb.placePiece(3,2) == O);
+	EXPECT_TRUE(threeTb.placePiece(3,3) == X);
+	EXPECT_TRUE(threeTb.getWinner() == X);
+}
+
+TEST(TicTacToeBoardTest, verticalWinX)
+{
+	TicTacToeBoard threeTb;
+	EXPECT_TRUE(threeTb.placePiece(1,1) == X);
+	EXPECT_TRUE(threeTb.placePiece(2,2) == O);
 	EXPECT_TRUE(threeTb.placePiece(2,1) == X);
 	EXPECT_TRUE(threeTb.placePiece(3,2) == O);
 	EXPECT_TRUE(threeTb.placePiece(3,1) == X);
 	EXPECT_TRUE(threeTb.getWinner() == X);
+}
+
+TEST(TicTacToeBoardTest, horizontalWinO)
+{
+	TicTacToeBoard threeTb;
+	EXPECT_TRUE(threeTb.placePiece(1,1) == X);
+	EXPECT_TRUE(threeTb.placePiece(2,2) == O);
+	EXPECT_TRUE(threeTb.placePiece(2,1) == X);
+	EXPECT_TRUE(threeTb.placePiece(3,2) == O);
+	EXPECT_TRUE(threeTb.placePiece(3,3) == X);
+	EXPECT_TRUE(threeTb.placePiece(1,2) == O);
+	EXPECT_TRUE(threeTb.getWinner() == O);
 }

@@ -82,81 +82,82 @@ Piece TicTacToeBoard::getWinner()
 {
   Piece prev = board[0][0];
   int inRow = 0;
+  Piece cur;
   for(int i = 0; i < BOARDSIZE; i++)
   {
     for(int j = 0; j < BOARDSIZE; j++)
     {
+      cur = board[i][j];
       if(i == 0 && j == 0)
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
+          prev = cur;
+          inRow = 1;
         }
-        prev = board[i][j];
-        inRow = 1;
       }
       else if(j == 0)
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
+          prev = cur;
+          inRow = 1;
         }
-        prev = board[i][j];
-        inRow = 1;
       }
       else
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
-        }
-        else if(board[i][j]==prev)
-        {
-          inRow++;
-          if(inRow == 3)
-            return board[i][j];
+          if(cur==prev)
+          {
+            inRow++;
+            if(inRow == 3)
+              return cur;
+          }
         }
       }
     }
   }
   
+  prev = board[0][0];
+  inRow = 0;
+  
   for(int j = 0; j < BOARDSIZE; j++)
   {
     for(int i = 0; i < BOARDSIZE; i++)
     {
+      cur = board[i][j];
       if(i == 0 && j == 0)
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
+          prev = cur;
+          inRow = 1;
         }
-        prev = board[i][j];
-        inRow = 1;
       }
       else if(i == 0)
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
+          prev = cur;
+          inRow = 1;
         }
-        prev = board[i][j];
-        inRow = 1;
       }
       else
       {
-        if(board[i][j] == Blank)
+        if(cur == X || cur == O)
         {
-          return Invalid;
-        }
-        else if(board[i][j]==prev)
-        {
-          inRow++;
-          if(inRow == 3)
-            return board[i][j];
+          if(cur==prev)
+          {
+            inRow++;
+            if(inRow == 3)
+              return cur;
+          }
         }
       }
     }
   }
+  
   if(board[0][0] == X && board[1][1] == X && board[2][2] == X)
     return X;
   if(board[0][0] == O && board[1][1] == O && board[2][2] == O)
@@ -165,5 +166,14 @@ Piece TicTacToeBoard::getWinner()
     return X;
   if(board[2][0] == O && board[1][1] == O && board[0][2] == O)
     return X;
+
+  for(int i = 0; i < BOARDSIZE; i++)
+  {
+    for(int j = 0; j < BOARDSIZE; j++)
+    {
+        if(board[i][j] == Blank)
+          return Invalid;
+    }
+  }
   return Blank;
 }
