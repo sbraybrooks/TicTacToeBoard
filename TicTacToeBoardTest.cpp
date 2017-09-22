@@ -24,7 +24,7 @@ TEST(TicTacToeBoardTest, toggleTurn)
 {
 	TicTacToeBoard threeTb;
 	Piece ret = threeTb.toggleTurn();
-	ASSERT_TRUE(ret == O) << "toggleTurn returns correct Piece before playing game";
+	ASSERT_TRUE(ret == O) << "toggleTurn returns correct piece on first turn of game";
 }
 
 TEST(TicTacToeBoardTest, getPiece)
