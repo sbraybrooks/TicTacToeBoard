@@ -19,21 +19,47 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
-  return Invalid;
+	if(turn == X)
+	{
+	  turn = O;
+	  return turn;
+	}
+	else if (turn == O)
+	{
+	  turn = X;
+	  return turn;
+	}
+	else
+	  return Invalid;
 }
 
 /**
- * Places the piece of the current turn on the board, returns what
- * piece is placed, and toggles which Piece's turn it is. placePiece does 
- * NOT allow to place a piece in a location where there is already a piece.
+ * Places the piece of the current turn on the board,
+ * returns what piece is placed,
+ * and toggles which Piece's turn it is.
+ * placePiece does NOT allow to place a piece in a location where there is already a piece.
  * In that case, placePiece just returns what is already at that location. 
- * Out of bounds coordinates return the Piece Invalid value. When the game
- * is over, no more pieces can be placed so attempting to place a piece
- * should neither change the board nor change whose turn it is.
+ * Out of bounds coordinates return the Piece Invalid value.
+ * When the game is over, no more pieces can be placed so attempting to place a piece should neither change the board nor change whose turn it is.
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
-  return Invalid;
+  Piece place = board[row-1][column-1];
+  if (getWinner() == Blank)
+    return place;
+  else if (row > 3 || column > 3 || row < 1 || column < 1)
+    return Invalid;
+  if (place == X || place == O)
+    return place;
+  else if (place == Blank)
+  {
+    board[row-1][column-1] = turn;
+    Piece playedTurn = turn;
+    toggleTurn();
+    return playedTurn;
+  }
+  else
+    return Invalid;
 }
 
 /**
@@ -42,7 +68,10 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
-  return Invalid;
+  if (row > 3 || column > 3 || row < 1 || column < 1)
+    return Invalid;
+  Piece pieceAtCoord = board[row-1][column-1];
+  return pieceAtCoord;
 }
 
 /**
@@ -51,5 +80,90 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
-  return Invalid;
+  Piece prev = board[0][0];
+  int inRow = 0;
+  for(int i = 0; i < BOARDSIZE; i++)
+  {
+    for(int j = 0; j < BOARDSIZE; j++)
+    {
+      if(i == 0 && j == 0)
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        prev = board[i][j];
+        inRow = 1;
+      }
+      else if(j == 0)
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        prev = board[i][j];
+        inRow = 1;
+      }
+      else
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        else if(board[i][j]==prev)
+        {
+          inRow++;
+          if(inRow == 3)
+            return board[i][j];
+        }
+      }
+    }
+  }
+  
+  for(int j = 0; j < BOARDSIZE; j++)
+  {
+    for(int i = 0; i < BOARDSIZE; i++)
+    {
+      if(i == 0 && j == 0)
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        prev = board[i][j];
+        inRow = 1;
+      }
+      else if(i == 0)
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        prev = board[i][j];
+        inRow = 1;
+      }
+      else
+      {
+        if(board[i][j] == Blank)
+        {
+          return Invalid;
+        }
+        else if(board[i][j]==prev)
+        {
+          inRow++;
+          if(inRow == 3)
+            return board[i][j];
+        }
+      }
+    }
+  }
+  if(board[0][0] == X && board[1][1] == X && board[2][2] == X)
+    return X;
+  if(board[0][0] == O && board[1][1] == O && board[2][2] == O)
+    return X;
+  if(board[2][0] == X && board[1][1] == X && board[0][2] == X)
+    return X;
+  if(board[2][0] == O && board[1][1] == O && board[0][2] == O)
+    return X;
+  return Blank;
 }
