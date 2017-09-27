@@ -17,6 +17,11 @@ TicTacToeBoard::TicTacToeBoard()
  * Switches turn member variable to represent whether it's X's or O's turn
  * and returns whose turn it is
 **/
+/** 
+ * BUG: The function should switch the turn variable to O if it was X and X if it was O. This bug makes the function
+ * return X when the turn was X's, instead of O like it should. This is because it returns X if the turn was X
+ * instead of the turn variable which has been switched.
+**/
 Piece TicTacToeBoard::toggleTurn()
 {
 	if(turn == X)

@@ -20,12 +20,25 @@ TEST(TicTacToeBoardTest, sanityCheck)
 	ASSERT_TRUE(true);
 }
 
+/** 
+ * BUG TEST: The function should switch the turn variable to O if it was X and X if it was O. This bug makes the function
+ * return X when the turn was X's, instead of O like it should. This is because it returns X if the turn was X
+ * instead of the turn variable which has been switched.
+**/
 TEST(TicTacToeBoardTest, toggleTurn)
 {
 	TicTacToeBoard threeTb;
 	Piece ret = threeTb.toggleTurn();
 	ASSERT_TRUE(ret == O) << "toggleTurn returns correct piece on first turn of game";
 }
+
+TEST(TicTacToeBoardTest, toggleTurn2)
+{
+	TicTacToeBoard threeTb;
+	threeTb.toggleTurn();
+	ASSERT_TRUE(threeTb.toggleTurn() == X) << "toggleTurn returns correct piece on first turn of game";
+}
+
 
 TEST(TicTacToeBoardTest, getPiece)
 {
